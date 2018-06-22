@@ -1,6 +1,12 @@
+import React from 'react';
 import * as constants from './constants';
 
 export const padZeroes = (width, n) => ('' + n).padStart(width, '0');
+
+export const reactVersionIsAtLeast = (vMajorRequired, vMinorRequired) => {
+  const [, vMajor, vMinor] = React.version.match(/^(\d+)\.(\d+)/);
+  return +vMajor > vMajorRequired || +vMajor === vMajorRequired && vMinor >= vMinorRequired;
+};
 
 export const getTimeStamp = () => {
   const now = new Date();

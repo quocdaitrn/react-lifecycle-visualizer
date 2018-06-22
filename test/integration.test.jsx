@@ -53,6 +53,20 @@ describe('traceLifecycle', () => {
   it('preserves static properties', () => {
     expect(TracedChild.staticProperty).toBe('a static property');
   });
+
+  // TODO: Untested because of Enzyme failure on React.forwardRef (https://github.com/airbnb/enzyme/issues/1604)
+  it('forwards refs', () => {
+    const refSpy = jest.fn();
+    const RefWrapper = () => (
+      <VisualizerProvider>
+        <TracedChild ref={refSpy}/>
+      </VisualizerProvider>
+    );
+    const refWrapper = mount(<RefWrapper/>);
+    const childInstance = refWrapper.find(TracedChild).childAt(0).instance();
+
+    expect(refSpy).toHaveBeenCalledWith(childInstance);
+  });
 });
 
 describe('LifecyclePanel', () => {
